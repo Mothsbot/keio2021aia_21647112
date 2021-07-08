@@ -18,14 +18,9 @@ class Digits_Data:
                 flattened_img = data.reshape(-1)
                 self.samples.append([flattened_img, i])
 
-        # hint: you will need to flatten the images to represent them as vectors (numpy arrays) and pair them with digit
-        # labels from the training data
-        #dict['train']['test'], dict[0]...[9] w/ list of arrays of pixels for image
-
         self.shuffle()
         
         self.starts = np.arange(0, len(self.samples), self.batch_size)
-        #Initialization array (start = 0, end = # of samples, split by batches i.e. 64)
 
     def __iter__(self):
                 
@@ -55,8 +50,6 @@ class Digits_Data:
         features = [self.samples[i][0] for i in range(len(self.samples))]
 
         # slice samples w/ starts
-        # inputs = [features[self.starts[i]:self.starts[i + 1]] for i in range(self.starts.shape[0] - 1)]
-        # targets = [target[self.starts[i]:self.starts[i + 1]] for i in range(self.starts.shape[0] - 1)]
         inputs = [features[self.starts[i]:self.starts[i+1]] for i in range(len(self.starts)-1)]
         targets = [target[self.starts[i]:self.starts[i+1]] for i in range(len(self.starts)-1)]
 

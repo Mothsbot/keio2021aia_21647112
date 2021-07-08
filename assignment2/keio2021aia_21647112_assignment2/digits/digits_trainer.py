@@ -13,7 +13,6 @@ class Digits_Trainer:
         acc = None
         # YOUR_CODE
         # hint: return the accuracy (i.e. the percentage of digits classified correctly) of the current model on the dataset given in the constructor
-        # acc = 100*np.mean([1 if self.model(inputs) == targets else 1 - CrossEntropy.loss(self.model, targets) for inputs, targets in self.dataset])
         acc = 100 * np.mean([1 if self.model(x) == np.argmax(y) else 0 for x, y in self.dataset.samples])
         return acc
     
@@ -41,7 +40,7 @@ class Digits_Trainer:
                 # hint: use the model to generate predictions (digit labels) for a batch, and then use the loss given in
                 # the constructor to update the epoch_loss variable
                 outputs = []
-                targets = batch['targets']
+
                 for (img, target) in zip(batch['inputs'], batch['targets']):
                     predicted = np.zeros(10)
                     yhat = self.model(img)
@@ -56,7 +55,7 @@ class Digits_Trainer:
                 # lecture video for explanation)
 
                 for i in outputs:
-                    grad = self.loss.grad(np.array(i), np.array(targets))
+                    grad = self.loss.grad(np.array(i), np.array(target))
                     inputs = grad
 
                 self.model.backward(grad)
